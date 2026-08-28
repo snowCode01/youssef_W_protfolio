@@ -1,0 +1,35 @@
+====================================================================
+GitHub Pages Deployment & Blank Screen Issue Resolution Steps
+====================================================================
+
+1. Issue Diagnosis:
+   - Phenomenon: Opening https://snowcode01.github.io/youssef_W_protfolio/ produced a blank white screen.
+   - Cause: GitHub Pages was configured to publish from the repository root '/ (root)'.
+   - Root index.html referenced raw source JSX (<script type="module" src="/src/main.jsx"></script>).
+   - Browsers cannot parse uncompiled JSX natively, leading to JavaScript syntax errors and rendering failure.
+   - Verified that the production bundle in '/docs/' (https://snowcode01.github.io/youssef_W_protfolio/docs/) worked perfectly.
+
+2. Fix Implementation:
+   - Added an auto-redirect script to root 'index.html' within the <head> tag:
+     <script>
+       if (window.location.hostname.includes('github.io') && !window.location.pathname.endsWith('/docs/')) {
+         window.location.replace(window.location.pathname.replace(/\/?$/, '/docs/'));
+       }
+     </script>
+   - When users visit the root GitHub Pages URL, they are instantly redirected to '/docs/', rendering the bundled app without errors.
+
+3. Build Process:
+   - Executed 'npm run build' which ran Vite build and copied output files to 'docs/' via 'scripts/copy-docs.js'.
+
+4. Git Commit & Synchronization:
+   - Added updated 'index.html', 'docs/', and 'steps.txt'.
+   - Committed changes and pushed to 'main' branch on GitHub.
+
+5. Recommended GitHub Pages Settings (Optional):
+   - Go to Repository Settings -> Pages.
+   - Under Build and deployment:
+     * Source: Deploy from a branch
+     * Branch: main
+     * Folder: /docs
+   - Click Save.
+====================================================================
