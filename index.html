@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en" class="dark scroll-smooth">
   <head>
+    <script>
+      if (window.location.hostname.includes('github.io') && !window.location.pathname.endsWith('/docs/')) {
+        window.location.replace(window.location.pathname.replace(/\/?$/, '/docs/'));
+      }
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./assets/logo-BmT_ODuK.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
